@@ -49,7 +49,7 @@ select * from crime;
 select * from victim;
 select * from suspect;
 
-/* 1. Selecct all open incidents */
+/* 1. Select all open incidents */
 select * from crime where status='open'; 
 
 /* 2. Find the total number of incidents. */
@@ -67,12 +67,14 @@ update victim set age=25 where crimeid=1;
 update victim set age=30 where crimeid=2;
 update victim set age=32 where crimeid=3;
 
-select name from victim order by age desc;
+-- select name from victim order by age desc;
 
-select v.name,s.name,v.age from victim v inner join suspect s on v.crimeid=s.crimeid order by v.age desc;
+select v.name,v.age,s.name,s.age from victim v inner join suspect s on v.crimeid=s.crimeid order by s.age desc , v.age desc;
 
 /* 6. Find the average age of persons involved in incidents.*/
-select avg(age) Average_Age from victim;
+-- select avg(age) Average_Age from victim;
+
+select avg(v.age) Victim_Age,avg(s.age) Suspect_Age from victim v inner join suspect s on s.crimeid=v.CrimeID;
 
 /* 7. List incident types and their counts, only for open cases. */
 select IncidentType,count(incidenttype) as Count_Incident_Type from crime group by incidenttype;
@@ -90,7 +92,7 @@ select v.name from victim v inner join crime c on c.crimeid=v.crimeId where c.st
 
 /* 10. List incident types where there are persons aged 30 or 35 involved. */
 update victim set age=35 where crimeid=3;
-select c.incidenttype from crime c inner join victim v on c.crimeid=v.crimeid where v.age=30 or v.age=35;
+select c.incidenttype ,v.age from crime c inner join victim v on c.crimeid=v.crimeid where v.age=30 or v.age=35;
 
 /* 11. Find persons involved in incidents of the same type as 'Robbery'. */
 
@@ -107,13 +109,18 @@ select incidenttype from crime group by incidenttype having count(incidenttype)>
 
 /* 13. List all incidents with suspects whose names also appear as victims in other incidents*/
 
-select c.incidenttype ,s.name from (crime c inner join suspect s on c.crimeid=s.crimeid)
-inner join victim v on c.crimeid=v.crimeid where s.name=v.name;  /doubt/
+select * from suspect;
+select * from crime;
+select * from victim;
+insert into victim values
+(4,4,'Robber 1','robber1@gmail.com','none',null);
 
+select c.incidenttype ,s.name from (crime c inner join suspect s on c.crimeid=s.crimeid)
+inner join victim v on c.crimeid=v.crimeid where s.name=v.name;  
 
 /* 14. Retrieve all incidents along with victim and suspect details.*/
 select * from suspect;
-select c.,v.,s.* from (crime c inner join victim v on c.crimeid=v.crimeid)
+select c.*,v.*,s.* from (crime c inner join victim v on c.crimeid=v.crimeid)
 inner join suspect s on s.crimeid=c.crimeid;
 
 /* 15. Find incidents where the suspect is older than any victim. */
@@ -133,12 +140,12 @@ insert into suspect values
 select s.name,c.IncidentType from suspect s inner join crime c on c.crimeid=s.crimeid group by c.IncidentType,s.name having count(c.IncidentType)>1; 
 update suspect set name='Robber 1' where crimeid=4;
 
-/17. List incidents with no suspects involved./
+/*17. List incidents with no suspects involved.*/
 select * from crime where crimeid not in (select crimeid from suspect);
 
 /* 18. List all cases where at least one incident is of type 'Homicide' and all other incidents are of type
 'Robbery'.*/ 
-select crimeid,incidenttype from crime where incidenttype ='Homicide' or incidenttype='Robbery'; /* doubt*/
+select crimeid,incidenttype from crime where incidenttype ='Homicide' or incidenttype='Robbery'; 
 
 
 /* 19. Retrieve a list of all incidents and the associated suspects, showing suspects for each incident, or
