@@ -105,7 +105,8 @@ select * from crime;
 insert into crime values
 (4,'Robbery','2023-09-11','Brook side,CityPark','Robbery at bank','open');
 
-select incidenttype from crime group by incidenttype having count(status='open')>1;
+select incidenttype from crime where status='open' group by incidenttype having count(*)>1;
+
 
 /* 13. List all incidents with suspects whose names also appear as victims in other incidents*/
 
