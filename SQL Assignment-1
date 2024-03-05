@@ -77,7 +77,7 @@ select v.name,v.age,s.name,s.age from victim v inner join suspect s on v.crimeid
 select avg(v.age) Victim_Age,avg(s.age) Suspect_Age from victim v inner join suspect s on s.crimeid=v.CrimeID;
 
 /* 7. List incident types and their counts, only for open cases. */
-select IncidentType,count(incidenttype) as Count_Incident_Type from crime group by incidenttype;
+select IncidentType,count(incidenttype) as Count_Incident_Type from crime where status='open' group by incidenttype;
 
 /* 8. Find persons with names containing 'Doe'. */
 select name from victim where name like '%Doe%' 
@@ -105,7 +105,7 @@ select * from crime;
 insert into crime values
 (4,'Robbery','2023-09-11','Brook side,CityPark','Robbery at bank','open');
 
-select incidenttype from crime group by incidenttype having count(incidenttype)>1;
+select incidenttype from crime group by incidenttype having count(status='open')>1;
 
 /* 13. List all incidents with suspects whose names also appear as victims in other incidents*/
 
