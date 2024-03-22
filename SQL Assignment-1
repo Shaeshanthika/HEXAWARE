@@ -160,3 +160,5 @@ from crime c left  join suspect s on c.crimeid=s.crimeid;
 /* 20. List all suspects who have been involved in incidents with incident types 'Robbery' or 'Assault' */
 
 select s.* from suspect s inner join crime c on c.crimeid=s.crimeid where c.incidenttype ='Robbery' or c.incidenttype='Assault';
+
+this change is done on 22-march-2024
