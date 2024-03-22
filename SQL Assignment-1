@@ -163,9 +163,6 @@ select s.* from suspect s inner join crime c on c.crimeid=s.crimeid where c.inci
 
 this change is done on 22-march-2024
 this another change is done on 22-march-2024
-<<<<<<< Updated upstream
 This change is done directly in Remote Repo
-=======
 this one more change is done on 22-march-2024
 
->>>>>>> Stashed changes
